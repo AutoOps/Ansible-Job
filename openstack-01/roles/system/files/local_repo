@@ -1,0 +1,5 @@
+[AutoOps] 
+name=This is a local repo
+baseurl=
+enabled=1
+gpgcheck=0

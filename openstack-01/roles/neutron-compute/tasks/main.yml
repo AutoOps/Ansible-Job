@@ -1,0 +1,6 @@
+---
+
+- include: neutron-install.yml
+- include: bridge-agent.yml
+- include: neutron-nova.yml
+- include: service-enable.yml

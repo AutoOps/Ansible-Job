@@ -1,0 +1,5 @@
+---
+
+- include: glance-db.yml
+- include: glance-api.yml
+- include: glance-install.yml

@@ -1,0 +1,12 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: Install NTP service
+  yum: name={{ item }} state=present
+  with_items:
+    - chrony
+  tags: ntp
+
+- name: enable chronyd_service on boot
+  service: name=chronyd.service  state=started  enabled=yes
+  tags: ntp

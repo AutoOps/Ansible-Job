@@ -1,0 +1,9 @@
+---
+# Handlers for controller noticy
+
+- name: restart_keystone_httpd_enable
+  service: name={{ item }}  state=restarted  enabled=yes
+  with_items:
+    - httpd.service
+    - memcached.service
+  tags: keystone

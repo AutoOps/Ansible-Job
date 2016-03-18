@@ -1,0 +1,14 @@
+---
+# Create the openstack nova database
+
+- name: Create  openstack database
+  mysql_db: login_user=root login_password=''  name={{ item.name }} state=present
+  with_items:
+    - { name: 'nova'}
+  tags: nova-server
+
+- name: Grant proper access to the openstack database
+  mysql_user: login_user=root login_password=''   name={{ item.name }} password={{ nova_dbpass  }} priv=*.*:ALL state=present
+  with_items:
+    - { name: 'nova'}
+  tags: nova-server

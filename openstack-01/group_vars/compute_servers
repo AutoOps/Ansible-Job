@@ -1,0 +1,11 @@
+controller: 172.16.50.53
+compute: 172.16.50.54
+rabbit_user: openstack
+rabbit_pass: MyPassWord*2016
+neutron_dbpass: MyPassWord*2016
+nova_pass: MyPassWord*2016
+virtualization: qemu
+public_interface_name: en32
+admin_pass: MyPassWord*2016
+
+

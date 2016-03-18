@@ -1,0 +1,24 @@
+---
+
+master: "172.16.90.254"
+zabbix_server: "172.16.90.254"
+repo_host: "172.16.90.254"
+public_repo: false # true or false
+
+
+manager_network_interface: "eth0"
+publick_network_interface: "eth0"
+storage_network_interface: "eth0"
+
+host: 172.16.90.100
+mysql_host: localhost
+neutron_l2_ip: 172.16.90.100
+public_interface_name: eth0
+openstack_sql_pass: password
+
+httpd_config: /root/file/wsgi-keystone.conf
+dashboard_config: /root/file/local_settings
+yum_file: /root/file/local_repo
+virtualization: qemu  #kvm or qemu
+
+

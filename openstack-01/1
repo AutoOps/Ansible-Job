@@ -1,0 +1,39 @@
+---
+  - hosts: all
+    roles:
+#      - system
+#      - agent
+      - ntp
+#
+#  - hosts: controller_servers
+#    roles:
+#      - mariadb
+#      - mongodb
+#      - rabbitmq
+#      - keystone
+#      - glance
+#      - nova-server
+#      - neutron-server
+#      - dashboard
+#
+#  - hosts: compute_servers
+#    roles:
+#      - nova-compute
+#      - neutron-compute
+ 
+
+#      #  - glance 
+#      #  - nova
+#      #  - neutron
+#      #  - heat
+#        
+#
+#        #- host:compute
+#        #  roles:
+#        #  - nova-compute
+#        #  - neutron-agent
+#
+#        #- host:network
+#        #  roles:
+#        #  - neutron-network
+#

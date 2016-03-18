@@ -1,0 +1,18 @@
+---
+#    - include: init-config.yml
+    - include: init-service.yml
+
+    - name: Install centos_release_openstack_liberty and epel  and zabbix rpm
+      yum: name={{ item }} state=present
+      with_items:
+            - centos-release-openstack-liberty
+            - http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+            - wget
+            - http://repo.zabbix.com/zabbix/2.2/rhel/7/x86_64/zabbix-release-2.2-1.el7.noarch.rpm
+
+    - name : Install the OpenStack client
+      yum : name={{ item }} state=present
+      with_items:
+            - python-openstackclient
+            - openstack-selinux
+#            - chrony

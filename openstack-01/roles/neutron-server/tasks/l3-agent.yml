@@ -1,0 +1,10 @@
+---
+# Config /etc/neutron/l3_agent.ini
+- name: Edit the /etc/neutron/l3_agent.ini file and complete the following actions
+  ini_file: >
+    dest=/etc/neutron/l3_agent.ini  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+    - { section: 'DEFAULT',option: 'interface_driver',value: 'neutron.agent.linux.interface.BridgeInterfaceDriver' }
+    - { section: 'DEFAULT',option: 'external_network_bridge ',value: ''}
+    - { section: 'DEFAULT',option: 'verbose',value: 'True'}
+  tags:neutron

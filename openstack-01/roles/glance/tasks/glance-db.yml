@@ -1,0 +1,14 @@
+---
+# Create the openstack database
+
+- name: Create  openstack database
+  mysql_db: login_user=root login_password=''  name={{ item.name }} state=present
+  with_items:
+    - { name: 'glance'}
+  tags: glance
+
+- name: Grant proper access to the openstack database
+  mysql_user: login_user=root login_password=''   name={{ item.name }} password={{ glance_dbpass }} priv=*.*:ALL state=present
+  with_items:
+    - { name: 'glance'}
+  tags: glance

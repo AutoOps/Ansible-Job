@@ -1,0 +1,20 @@
+---
+# Install and configure Message queue
+
+- name: Install the Rabbitmq package
+  yum: name={{ item }} state=present
+  with_items:
+    - rabbitmq-server
+  tags: rabbitmq
+
+- name: restart Rabbitmq-server and Boot enable
+  service: name=rabbitmq-server.service state=started enabled=yes
+  tags: rabbitmq
+
+- name: Config the Rabbitmq add user
+  rabbitmq_user: user={{ rabbit_user }} password={{ rabbit_pass }} vhost=/ configure_priv=.* read_priv=.* write_priv=.* state=present
+  tags: rabbitmq
+
+- name: Enables the rabbitmq_management plugin
+  rabbitmq_plugin: names=rabbitmq_management state=enabled
+  tags: rabbitmq

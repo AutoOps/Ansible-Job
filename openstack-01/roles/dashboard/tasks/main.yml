@@ -1,0 +1,18 @@
+---
+# Install and configure dashboard 
+- name: Install the dashboard package
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-dashboard
+  tags: dashboard
+
+- name: Configure the dashboard HTTP server
+  copy: src={{ dashboard_config }}  dest=/etc/openstack-dashboard/
+  tags: dashboard
+
+- name: restart_dashboard_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - httpd.service
+    - memcached.service
+  tags: dashboard

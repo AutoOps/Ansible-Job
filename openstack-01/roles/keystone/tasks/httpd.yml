@@ -1,0 +1,12 @@
+---
+# config httpd.conf
+- name:  Configure httpd
+  lineinfile: dest=/etc/httpd/conf/httpd.conf  regexp={{ item.s }} line={{ item.d }} insertafter={{ item.i }}
+  with_items:
+    - { s: "'^ServerName'",d: "'ServerName controller'",i: "'#ServerName'"}
+  tags: httpd
+
+- name: Configure the Apache HTTP server
+  copy: src=wsgi-keystone.conf  dest=/etc/httpd/conf.d/
+  tags: httpd
+  notify: restart_keystone_httpd_enable

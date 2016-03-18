@@ -1,0 +1,10 @@
+---
+- name: System service stop
+  service: name={{ item }} state=stopped enabled=no
+  with_items:
+      - firewalld.service
+      - postfix.service
+      - NetworkManager
+
+- name: close selinux
+  selinux: state=disabled

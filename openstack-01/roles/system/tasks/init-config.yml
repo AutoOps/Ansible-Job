@@ -1,0 +1,18 @@
+---
+    - name: remove system repo
+      shell: rm -rf /etc/yum.repos.d/*
+
+    - name: Add repository
+      copy: src=local_repo  dest=/etc/yum.repos.d/ext.repo
+
+    - name:  Configure repo
+      lineinfile: dest=/etc/yum.repos.d/ext.repo  regexp={{ item.s }} line={{ item.d }}
+      with_items:
+          - { s: "baseurl=",d: "baseurl=http://{{ repo_host }}/repo/"}
+
+    - name : Install the OpenStack client
+      yum : name={{ item }}
+      with_items:
+            - python-openstackclient
+            - openstack-selinux
+#            - chrony

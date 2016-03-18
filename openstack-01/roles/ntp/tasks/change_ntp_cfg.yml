@@ -1,0 +1,10 @@
+---
+# This role contains common plays that will run on all nodes.
+- name: allow other nodes to connect to the chrony daemon on the controller
+  lineinfile: dest=/etc/chrony.conf regexp='^#allow' line='allow 0.0.0.0' state='present'
+  notify: restart_chronyd
+  tags: ntp
+
+- name: enable chronyd_service on boot
+  service: name=chronyd.service state=started enabled=yes
+  tags: ntp

@@ -1,0 +1,6 @@
+---
+- name: change compute node ntp.conf
+  shell: 'echo "server controller iburst" >/etc/chrony.conf'
+
+- name: enable chronyd_service on boot
+  service: name=chronyd.service  state=restarted

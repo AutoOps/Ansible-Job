@@ -1,0 +1,35 @@
+---
+    - name: Install  Mariadb
+      yum: name={{ item }}
+      with_items:
+            - mariadb
+            - mariadb-server
+            - MySQL-python
+
+    - name: Configure  Mariadb
+      ini_file: >
+            dest=/etc/my.cnf.d/mariadb_openstack.cnf section={{ item.section }}  option={{ item.option }} value={{ item.value }}
+      with_items:
+            - { section: 'mysqld',option: 'bind-address',value: '0.0.0.0' }
+            - { section: 'mysqld',option: 'default-storage-engine',value: 'innodb' }
+            - { section: 'mysqld',option: 'collation-server',value: 'utf8_general_ci' }
+            - { section: 'mysqld',option: 'init-connect',value: "'SET NAMES utf8'" }
+            - { section: 'mysqld',option: 'character-set-server',value: 'utf8'}
+    - name: restart_Mariadb_service_and_Boot_enable
+      service: name=mariadb.service  state=restarted enabled=yes
+
+#    - name: Create  openstack database
+#      mysql_db: login_user=root login_password=''   name={{ item.name }} state=present
+#      with_items:
+#            - { name: 'keystone'}
+#            - { name: 'glance'}
+#            - { name: 'nova'}
+#            - { name: 'neutron'}
+#
+#    - name: Grant proper access to the openstack database
+#      mysql_user: name={{ item.name }} password={{ openstack_sql_pass }} host='%' priv=*.*:ALL state=present
+#      with_items:
+#            - { name: 'keystone'}
+#            - { name: 'glance'}
+#            - { name: 'nova'}
+#            - { name: 'neutron'}

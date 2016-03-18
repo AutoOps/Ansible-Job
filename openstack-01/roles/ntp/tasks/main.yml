@@ -1,0 +1,7 @@
+---
+- include: install_ntp.yml
+
+- name: config the /etc/chrony.conf
+  copy: src=chrony.conf dest=/etc/
+  notify: restart_chronyd
+  tags: ntp

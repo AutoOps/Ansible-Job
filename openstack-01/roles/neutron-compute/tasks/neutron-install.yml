@@ -1,0 +1,32 @@
+---
+# Install and configure neutron
+- name: Install the Nova package
+  yum: name={{ item }}
+  with_items:
+    - openstack-neutron
+    - openstack-neutron-linuxbridge
+    - ebtables
+    - ipset
+  tags: neutron
+
+- name: Edit the /etc/neutron/neutron.conf file and complete the following actions
+  ini_file: >
+    dest=/etc/neutron/neutron.conf  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+    - { section: 'DEFAULT',option: 'rpc_backend ',value: 'rabbit'}
+    - { section: 'oslo_messaging_rabbit',option: 'rabbit_host',value: '{{ controller }}'}
+    - { section: 'oslo_messaging_rabbit',option: 'rabbit_userid',value: '{{ rabbit_user }}'}
+    - { section: 'oslo_messaging_rabbit',option: 'rabbit_password',value: '{{ rabbit_pass }}'}
+    - { section: 'DEFAULT',option: 'auth_strategy ',value: 'keystone'}
+    - { section: 'keystone_authtoken',option: 'auth_uri',value: 'http://{{ controller }}:5000'}
+    - { section: 'keystone_authtoken',option: 'auth_url',value: 'http://{{ controller }}:35357'}
+    - { section: 'keystone_authtoken',option: 'auth_plugin',value: 'password'}
+    - { section: 'keystone_authtoken',option: 'project_domain_id',value: 'default'}
+    - { section: 'keystone_authtoken',option: 'user_domain_id',value: 'default'}
+    - { section: 'keystone_authtoken',option: 'project_name',value: 'service'}
+    - { section: 'keystone_authtoken',option: 'username',value: 'neutron'}
+    - { section: 'keystone_authtoken',option: 'password',value: '{{ neutron_pass }}'}
+    - { section: 'oslo_concurrency',option: 'lock_path ',value: '/var/lib/neutron/tmp'}
+    - { section: 'DEFAULT',option: 'verbose ',value: 'True'}
+    - { section: 'DEFAULT',option: 'debug',value: 'True'}
+  tags: neutron

@@ -1,0 +1,19 @@
+---
+# Config /etc/neutron/metadata_agent.ini
+- name: Edit the /etc/neutron/metadata_agent.ini file and complete the following actions
+  ini_file: >
+     dest=/etc/neutron/metadata_agent.ini  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+    - { section: 'DEFAULT',option: 'auth_uri',value: 'http://{{ controller }}:5000' }
+    - { section: 'DEFAULT',option: 'auth_url ',value: 'http://{{ controller }}:35357'}
+    - { section: 'DEFAULT',option: 'auth_region ',value: 'RegionOne'}
+    - { section: 'DEFAULT',option: 'auth_plugin ',value: 'password'}
+    - { section: 'DEFAULT',option: 'project_domain_id  ',value: 'default'}
+    - { section: 'DEFAULT',option: 'user_domain_id ',value: 'default'}
+    - { section: 'DEFAULT',option: 'project_name  ',value: 'service'}
+    - { section: 'DEFAULT',option: 'username  ',value: 'neutron'}
+    - { section: 'DEFAULT',option: 'password  ',value: '{{ neutron_pass }}'}
+    - { section: 'DEFAULT',option: 'nova_metadata_ip ',value: '{{ controller }}'}
+    - { section: 'DEFAULT',option: 'metadata_proxy_shared_secret ',value: '{{ metadata_secret }}'}
+    - { section: 'DEFAULT',option: 'verbose ',value: 'True'}
+  tags:neutron

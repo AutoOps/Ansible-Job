@@ -1,0 +1,66 @@
+---
+# Create the openstack database
+- name: Create  openstack database
+  mysql_db: login_user=root login_password=''  name={{ item.name }} state=present
+  with_items:
+    - { name: 'neutron' }
+  tags: neutron
+
+- name: Grant proper access to the openstack database
+  mysql_user: login_user=root login_password=''  name={{ item.name }} password={{ neutron_dbpass  }} priv=*.*:ALL state=present
+  with_items:
+    - { name: 'neutron'}
+  tags: neutron
+
+#  Create openstack Keystone endpoint
+
+- name: Create openstack service
+  keystone_service: >
+    name={{ item.name }}
+    service_type={{ item.service_type }}
+    description={{ item.description }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { name: 'neutron',service_type: 'network',description: "'OpenStack Networking'"}
+  tags: neutron
+
+- name: Create openstack api endpoints
+  keystone_endpoint: >
+    service_name={{ item.service }}
+    region={{ item.region }}
+    public_url={{ item.public }}
+    internal_url={{ item.internal }}
+    admin_url={{ item.admin }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { service: 'neutron',region: 'RegionOne',public: "'http://{{ controller }}:9696'", internal: "'http://{{ controller }}:9696'",admin: "'http://{{ controller }}:9696'"}
+  tags: neutron
+
+- name: Create openstack users
+  keystone_user: >
+    user={{ item.user }}
+    password={{ item.password }}
+    tenant={{ item.tenant }}
+    email={{ item.email }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { user: 'neutron', password: '{{ neutron_pass }}',tenant: 'service',email: 'neutron@localhost'}
+  tags: neutron
+
+- name: Add openstack roles to defined users in defined tenants
+  keystone_user: >
+   role={{ item.role }}
+   user={{ item.user }}
+   tenant={{ item.tenant }}
+   endpoint="http://{{ controller }}:35357/v2.0"
+   token="{{ admin_token }}"
+   state=present
+  with_items:
+    - { role: 'admin',user: 'neutron', tenant: 'service'}
+  tags: neutron
