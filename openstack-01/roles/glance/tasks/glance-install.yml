@@ -51,11 +51,11 @@
   tags: glance
 
 - name: glance_manage_db_sync
-  shell: su -s /bin/sh -c "glance-manage db_sync" glan
+  shell: su -s /bin/sh -c "glance-manage db_sync" glance
   tags: glance
 
 - name: restart_openstack_glance_service_and_Boot_enable
-  service: name={{ item }}  state=restarted enabled=yes
+  service: name={{ item }}  state=restarted  enabled=yes
   with_items:
         - openstack-glance-api.service
         - openstack-glance-registry.service

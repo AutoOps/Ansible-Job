@@ -4,4 +4,4 @@
   with_items:
     - openstack-nova-compute.service
     - neutron-linuxbridge-agent.service
-  tags:neutron
+  tags: neutron

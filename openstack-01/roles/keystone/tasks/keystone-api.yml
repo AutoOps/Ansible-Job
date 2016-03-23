@@ -32,7 +32,7 @@
     tenant={{ item.tenant }}
     tenant_description={{ item.tenant_description }}
     endpoint="http://{{ controller }}:35357/v2.0"
-    token="{{ admin_token }}"
+    token={{ admin_token }}
     state=present
   with_items:
     - { tenant: 'admin',tenant_description: "'Admin Project'"}
@@ -60,7 +60,7 @@
    user={{ item.user }}
    tenant={{ item.tenant }}
    endpoint="http://{{ controller }}:35357/v2.0"
-   token="{{ admin_token }}"
+   token={{ admin_token }}
    state=present
   with_items:
     - { role: 'admin',user: 'admin', tenant: 'admin'}

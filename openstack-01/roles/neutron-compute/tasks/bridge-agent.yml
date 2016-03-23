@@ -10,4 +10,4 @@
     - { section: 'agent',option: 'prevent_arp_spoofing',value: 'True'}
     - { section: 'securitygroup',option: 'enable_security_group ',value: 'True'}
     - { section: 'securitygroup',option: 'firewall_driver',value: 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver'}
-  tags:neutron
+  tags: neutron

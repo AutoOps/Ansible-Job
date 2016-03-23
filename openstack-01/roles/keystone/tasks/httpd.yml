@@ -9,4 +9,10 @@
 - name: Configure the Apache HTTP server
   copy: src=wsgi-keystone.conf  dest=/etc/httpd/conf.d/
   tags: httpd
-  notify: restart_keystone_httpd_enable
+#  notify: restart_keystone_httpd_enable
+
+- name: restart_keystone_httpd_enable
+  service: name={{ item }}  state=restarted  enabled=yes
+  with_items:
+    - httpd.service
+  tags: keystone

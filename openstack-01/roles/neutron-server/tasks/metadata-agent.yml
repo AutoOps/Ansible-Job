@@ -16,4 +16,4 @@
     - { section: 'DEFAULT',option: 'nova_metadata_ip ',value: '{{ controller }}'}
     - { section: 'DEFAULT',option: 'metadata_proxy_shared_secret ',value: '{{ metadata_secret }}'}
     - { section: 'DEFAULT',option: 'verbose ',value: 'True'}
-  tags:neutron
+  tags: neutron

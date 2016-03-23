@@ -13,4 +13,4 @@
     - { section: 'neutron',option: 'project_name ',value: 'service'}
     - { section: 'neutron',option: 'username ',value: 'neutron'}
     - { section: 'neutron',option: 'password ',value: '{{ neutron_pass }}'}
-  tags:neutron
+  tags: neutron

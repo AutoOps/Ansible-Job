@@ -11,4 +11,4 @@
     - { section: 'ml2_type_flat',option: 'flat_networks  ',value: 'public'}
     - { section: 'ml2_type_vxlan',option: 'vni_ranges  ',value: '1:1000'}
     - { section: 'securitygroup',option: 'enable_ipset  ',value: 'True'}
-  tags:neutron
+  tags: neutron

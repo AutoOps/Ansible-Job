@@ -15,4 +15,4 @@
     - { section: 'neutron',option: 'password ',value: '{{ neutron_pass }}'}
     - { section: 'neutron',option: 'service_metadata_proxy  ',value: 'True'}
     - { section: 'neutron',option: 'metadata_proxy_shared_secret ',value: '{{ metadata_secret }}'}
-  tags:neutron
+  tags: neutron

@@ -7,4 +7,4 @@
     - { section: 'DEFAULT',option: 'interface_driver',value: 'neutron.agent.linux.interface.BridgeInterfaceDriver' }
     - { section: 'DEFAULT',option: 'external_network_bridge ',value: ''}
     - { section: 'DEFAULT',option: 'verbose',value: 'True'}
-  tags:neutron
+  tags: neutron

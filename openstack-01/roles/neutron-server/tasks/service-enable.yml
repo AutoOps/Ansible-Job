@@ -16,4 +16,4 @@
     - neutron-dhcp-agent.service
     - neutron-metadata-agent.service
     - neutron-l3-agent.service
-  tags:neutron
+  tags: neutron

@@ -10,11 +10,11 @@
         - { section: 'DEFAULT',option: 'verbose',value: 'True'}
         - { section: 'DEFAULT',option: 'dnsmasq_config_file',value: '/etc/neutron/dnsmasq-neutron.conf'}
         - { section: 'DEFAULT',option: 'verbose',value: 'True'}
-  tags:neutron
+  tags: neutron
 
 - name: Create file /etc/neutron/dnsmasq-neutron.conf
   shell: echo "dhcp-option-force=26,1450" >/etc/neutron/dnsmasq-neutron.conf
-  tags:neutron
+  tags: neutron
 
 #- name: Edit the /etc/neutron/dnsmasq-neutron.conf file and complete the following actions
 #  lineinfile: dest=/etc/neutron/dnsmasq-neutron.conf  regexp={{ item.s }} line={{ item.d }} insertafter={{ item.i }} 
