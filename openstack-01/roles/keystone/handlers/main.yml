@@ -6,4 +6,5 @@
   with_items:
     - httpd.service
     - memcached.service
+    - openstack-keyston.service
   tags: keystone
