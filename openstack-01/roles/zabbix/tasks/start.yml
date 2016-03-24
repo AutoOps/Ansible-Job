@@ -1,0 +1,4 @@
+---
+  - name: enabled and started zabbix_agent service
+    service: name=zabbix-agent.service state=started enabled=yes
+    tags: zabbix_start

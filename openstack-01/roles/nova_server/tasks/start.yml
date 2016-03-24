@@ -1,0 +1,12 @@
+---
+# Install and configure Nova
+- name: restart_openstack_nova_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - openstack-nova-api.service
+    - openstack-nova-cert.service
+    - openstack-nova-consoleauth.service
+    - openstack-nova-scheduler.service
+    - openstack-nova-conductor.service
+    - openstack-nova-novncproxy.service
+  tags: nova_server_start

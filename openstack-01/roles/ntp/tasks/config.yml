@@ -1,0 +1,4 @@
+---
+- name: config the /etc/chrony.conf
+  copy: src=chrony.conf dest=/etc/
+  tags: ntp_config

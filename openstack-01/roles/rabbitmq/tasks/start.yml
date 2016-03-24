@@ -1,0 +1,5 @@
+---
+# start Message queue
+- name: restart Rabbitmq-server and Boot enable
+  service: name=rabbitmq-server.service state=started enabled=yes
+  tags: rabbitmq_start

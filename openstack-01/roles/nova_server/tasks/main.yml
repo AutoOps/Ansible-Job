@@ -1,5 +1,7 @@
 ---
+
+- include: db.yml
+- include: api.yml
 - include: install.yml
 - include: config.yml
 - include: start.yml
-

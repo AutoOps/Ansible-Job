@@ -1,0 +1,4 @@
+---
+  - name: restart_Mongod_service_and_Boot_enable
+    service: name=mongod.service state=restarted enabled=yes
+    tags: mongodb_start

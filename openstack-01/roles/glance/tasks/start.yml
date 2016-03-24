@@ -1,0 +1,8 @@
+---
+# Install and configure Glance
+- name: restart_openstack_glance_service_and_Boot_enable
+  service: name={{ item }}  state=restarted  enabled=yes
+  with_items:
+        - openstack-glance-api.service
+        - openstack-glance-registry.service
+  tags: glance_start

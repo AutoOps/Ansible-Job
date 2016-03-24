@@ -1,0 +1,52 @@
+---
+#  Create openstack Keystone endpoint
+- name: Create openstack service
+  keystone_service: >
+    name={{ item.name }}
+    service_type={{ item.service_type }}
+    description={{ item.description }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { name: 'glance',service_type: 'image',description: "'OpenStack Image service'"}
+  tags: glance_api
+
+- name: Create openstack endpoints
+  keystone_endpoint: >
+    service_name={{ item.service }}
+    region={{ item.region }}
+    public_url={{ item.public }}
+    internal_url={{ item.internal }}
+    admin_url={{ item.admin }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { service: 'glance',region: 'RegionOne',public: "'http://{{ controller }}:9292'",internal: "'http://{{ controller }}:9292'",admin: "'http://{{ controller }}:9292'"}
+  tags: glance_api
+
+- name: Create openstack users
+  keystone_user: >
+    user={{ item.user }}
+    password={{ item.password }}
+    tenant={{ item.tenant }}
+    email={{ item.email }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { user: 'glance', password: '{{ glance_pass }}',tenant: 'service',email: 'glance@localhost'}
+  tags: glance_api
+
+- name: Add openstack roles to defined users in defined tenants
+  keystone_user: >
+   role={{ item.role }}
+   user={{ item.user }}
+   tenant={{ item.tenant }}
+   endpoint="http://{{ controller }}:35357/v2.0"
+   token={{ admin_token }}
+   state=present
+  with_items:
+    - { role: 'admin',user: 'glance', tenant: 'service'}
+  tags: glance_api

@@ -1,0 +1,9 @@
+---
+# Install and configure nova compute
+- name: restart_openstack_nova_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - libvirtd.service
+    - openstack-nova-compute.service
+    - chronyd.service
+  tags: nova-compute_start

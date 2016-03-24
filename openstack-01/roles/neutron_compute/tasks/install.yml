@@ -1,0 +1,10 @@
+---
+# Install and configure neutron
+- name: Install the Nova package
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-neutron
+    - openstack-neutron-linuxbridge
+    - ebtables
+    - ipset
+  tags: neutron_compute_install

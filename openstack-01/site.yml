@@ -1,39 +1,23 @@
----
+#---
 #  - hosts: all
 #    roles:
 #      - system
-#      - agent
+#      - zabbix
 #      - ntp
-#
-  - hosts: controller_servers
-    roles:
+
+#  - hosts: controller_servers
+#    roles:
 #      - mariadb
 #      - mongodb
 #      - rabbitmq
-      - keystone
+#      - keystone
 #      - glance
-#      - nova-server
-#      - neutron-server
+#      - nova_server
+#      - neutron_server
 #      - dashboard
-#
+
 #  - hosts: compute_servers
 #    roles:
-#      - nova-compute
-#      - neutron-compute
- 
-
-#      #  - glance 
-#      #  - nova
-#      #  - neutron
-#      #  - heat
-#        
-#
-#        #- host:compute
-#        #  roles:
-#        #  - nova-compute
-#        #  - neutron-agent
-#
-#        #- host:network
-#        #  roles:
-#        #  - neutron-network
-#
+#      - nova_compute
+#      - neutron_compute
+#      - agent

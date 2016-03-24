@@ -1,0 +1,8 @@
+---
+  - name:  Configure zabbix
+    lineinfile: dest=/etc/zabbix/zabbix_agentd.conf  regexp={{ item.s }} line={{ item.d }}
+    with_items:
+        - { s: "Server=",d: "Server={{ zabbix_server }}"}
+        - { s: "ServerActive" ,d: "ServerActive={{ zabbix_server }}" }
+        - { s: "^Hostname" ,d: "Hostname={{ ansible_nodename }}" }
+    tags: zabbix_config

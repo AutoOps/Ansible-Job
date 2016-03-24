@@ -1,0 +1,7 @@
+---
+  - name: Install the MongoDB packages
+    yum: name={{ item }}
+    with_items:
+      - mongodb-server
+      - mongodb
+    tags: mongodb_install

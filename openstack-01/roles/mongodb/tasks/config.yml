@@ -1,0 +1,7 @@
+---
+  - name: Configure MongoDB
+    lineinfile: dest=/etc/mongod.conf  regexp={{ item.s }} line={{ item.d }} insertafter={{ item.i }}
+    with_items:
+      - { s: "'^bind_ip'",d: "'bind_ip = 0.0.0.0'", i: "'#bind_ip'"}
+      - { s: "'^smallfiles'" ,d: "'smallfiles = True'", i: "#smallfiles" }
+    tags: mongodb_config

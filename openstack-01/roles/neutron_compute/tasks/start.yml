@@ -1,0 +1,8 @@
+---
+# Install and configure neutron
+- name: restart_openstack_nova_service_and_Boot_enable
+  service: name={{ item }}  state=restarted  enabled=yes
+  with_items:
+    - openstack-nova-compute.service
+    - neutron-linuxbridge-agent.service
+  tags: neutron_compute_start

@@ -1,0 +1,7 @@
+---
+# Install and configure dashboard 
+- name: Install the dashboard package
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-dashboard
+  tags: dashboard_install

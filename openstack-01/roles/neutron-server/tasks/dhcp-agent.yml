@@ -9,7 +9,6 @@
         - { section: 'DEFAULT',option: 'enable_isolated_metadata',value: 'True'}
         - { section: 'DEFAULT',option: 'verbose',value: 'True'}
         - { section: 'DEFAULT',option: 'dnsmasq_config_file',value: '/etc/neutron/dnsmasq-neutron.conf'}
-        - { section: 'DEFAULT',option: 'verbose',value: 'True'}
   tags: neutron
 
 - name: Create file /etc/neutron/dnsmasq-neutron.conf

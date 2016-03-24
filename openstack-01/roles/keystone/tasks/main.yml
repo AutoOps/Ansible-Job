@@ -1,5 +1,6 @@
 ---
-  - include: keystone-db.yml
-  - include: keystone-install.yml
-  - include: httpd.yml
-  - include: keystone-api.yml
+  - include: db.yml
+  - include: install.yml
+  - include: config.yml
+  - include: start.yml
+  - include: api.yml

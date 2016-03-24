@@ -1,0 +1,4 @@
+---
+- name: enable chronyd_service on boot
+  service: name=chronyd.service  state=started  enabled=yes
+  tags: ntp_start

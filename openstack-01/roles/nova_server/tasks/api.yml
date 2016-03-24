@@ -1,0 +1,52 @@
+---
+#  Create openstack Keystone endpoint
+- name: Create openstack service
+  keystone_service: >
+    name={{ item.name }}
+    service_type={{ item.service_type }}
+    description={{ item.description }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { name: 'nova',service_type: 'compute',description: "'OpenStack Compute'"}
+  tags: nova_server_api
+
+- name: Create openstack endpoints
+  keystone_endpoint: >
+    service_name={{ item.service }}
+    region={{ item.region }}
+    public_url={{ item.public }}
+    internal_url={{ item.internal }}
+    admin_url={{ item.admin }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+    - { service: 'nova',region: 'RegionOne',public: "'http://{{ controller }}:8774/v2/%(tenant_id)s'",internal: "'http://{{ controller }}:8774/v2/%(tenant_id)s'",admin: "'http://{{ controller }}:8774/v2/%(tenant_id)s'"}
+  tags: nova_server_api
+
+- name: Create openstack users
+  keystone_user: >
+    user={{ item.user }}
+    password={{ item.password }}
+    tenant={{ item.tenant }}
+    email={{ item.email }}
+    endpoint="http://{{ controller }}:35357/v2.0"
+    token={{ admin_token }}
+    state=present
+  with_items:
+       - { user: 'nova', password: '{{ keystone_user_pass }}',tenant: 'service',email: 'nova@localhost'}
+  tags: nova_server_api
+
+- name: Add openstack roles to defined users in defined tenants
+  keystone_user: >
+   role={{ item.role }}
+   user={{ item.user }}
+   tenant={{ item.tenant }}
+   endpoint="http://{{ controller }}:35357/v2.0"
+   token={{ admin_token }}
+   state=present
+  with_items:
+    - { role: 'admin',user: 'nova', tenant: 'service'}
+  tags: nova_server_api

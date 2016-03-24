@@ -13,7 +13,7 @@
     - { section: 'DEFAULT',option: 'project_name  ',value: 'service'}
     - { section: 'DEFAULT',option: 'username  ',value: 'neutron'}
     - { section: 'DEFAULT',option: 'password  ',value: '{{ neutron_pass }}'}
-    - { section: 'DEFAULT',option: 'nova_metadata_ip ',value: '{{ controller }}'}
+    - { section: 'DEFAULT',option: 'nova_metadata_ip ',value: 'controller'}
     - { section: 'DEFAULT',option: 'metadata_proxy_shared_secret ',value: '{{ metadata_secret }}'}
     - { section: 'DEFAULT',option: 'verbose ',value: 'True'}
   tags: neutron

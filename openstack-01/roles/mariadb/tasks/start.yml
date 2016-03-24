@@ -1,0 +1,4 @@
+---
+  - name: restart_Mariadb_service_and_Boot_enable
+    service: name=mariadb.service  state=restarted enabled=yes
+    tags: mariadb_start

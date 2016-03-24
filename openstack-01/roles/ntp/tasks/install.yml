@@ -1,0 +1,8 @@
+---
+# yum install ntp service will run on all nodes.
+
+- name: Install NTP service
+  yum: name={{ item }} state=present
+  with_items:
+    - chrony
+  tags: ntp_install

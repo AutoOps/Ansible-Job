@@ -1,0 +1,8 @@
+---
+# Install and configure Message queue
+
+- name: Install the Rabbitmq package
+  yum: name={{ item }} state=present
+  with_items:
+    - rabbitmq-server
+  tags: rabbitmq_install

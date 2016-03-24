@@ -1,0 +1,9 @@
+---
+# Install and configure nova compute
+- name: Install the Nova compute package
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-nova-compute 
+    - sysfsutils 
+    - openstack-utils
+  tags: nova_compute_install

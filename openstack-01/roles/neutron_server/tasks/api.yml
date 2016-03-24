@@ -1,17 +1,5 @@
 ---
-# Create the openstack database
-- name: Create  openstack database
-  mysql_db: login_user=root login_password=''  name={{ item.name }} state=present
-  with_items:
-    - { name: 'neutron' }
-  tags: neutron
-
-- name: Grant proper access to the openstack database
-  mysql_user: login_user=root login_password=''  name={{ item.name }} password={{ neutron_dbpass  }} priv=*.*:ALL state=present
-  with_items:
-    - { name: 'neutron'}
-  tags: neutron
-
+#  Create openstack Keystone endpoint
 - name: Create openstack users
   keystone_user: >
     user={{ item.user }}
@@ -23,7 +11,7 @@
     state=present
   with_items:
     - { user: 'neutron', password: '{{ neutron_pass }}',tenant: 'service',email: 'neutron@localhost'}
-  tags: neutron
+  tags: neutron_server_api
 
 - name: Add openstack roles to defined users in defined tenants
   keystone_user: >
@@ -35,7 +23,7 @@
    state=present
   with_items:
     - { role: 'admin',user: 'neutron', tenant: 'service'}
-  tags: neutron
+  tags: neutron_server_api
 
 #  Create openstack Keystone endpoint
 
@@ -49,7 +37,7 @@
     state=present
   with_items:
     - { name: 'neutron',service_type: 'network',description: "'OpenStack Networking'"}
-  tags: neutron
+  tags: neutron_server_api
 
 - name: Create openstack api endpoints
   keystone_endpoint: >
@@ -63,4 +51,4 @@
     state=present
   with_items:
     - { service: 'neutron',region: 'RegionOne',public: "'http://{{ controller }}:9696'", internal: "'http://{{ controller }}:9696'",admin: "'http://{{ controller }}:9696'"}
-  tags: neutron
+  tags: neutron_server_api

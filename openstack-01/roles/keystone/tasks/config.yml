@@ -1,0 +1,33 @@
+---
+# Install and configure Keystone
+
+- name: Edit the /etc/keystone/keystone.conf file and complete the following actions
+  ini_file: >
+      dest=/etc/keystone/keystone.conf section={{ item.section }}  option={{ item.option }} value={{ item.value }}
+  with_items:
+    - { section: 'DEFAULT',option: 'admin_token',value: '{{ admin_token  }}' }
+    - { section: 'database',option: 'connection ',value: 'mysql://keystone:{{ keystone_dbpass }}@{{ controller }}/keystone' }
+    - { section: 'memcache',option: 'servers',value: 'localhost:11211' }
+    - { section: 'token',option: 'provider',value: 'uuid' }
+    - { section: 'token',option: 'driver',value: 'memcache'}
+    - { section: 'revoke',option: 'driver',value: 'sql'}
+    - { section: 'DEFAULT',option: 'verbose',value: 'True'}
+    - { section: 'DEFAULT',option: 'debug',value: 'True'}
+  tags: keystone_config
+
+- name: keystone_manage_db_sync
+  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
+  tags: keystone_config
+
+##############################
+# config httpd.conf
+
+- name:  Configure httpd
+  lineinfile: dest=/etc/httpd/conf/httpd.conf  regexp={{ item.s }} line={{ item.d }} insertafter={{ item.i }}
+  with_items:
+    - { s: "'^ServerName'",d: "'ServerName controller'",i: "'#ServerName'"}
+  tags: keystone_config
+
+- name: Configure the Apache HTTP server
+  copy: src=wsgi-keystone.conf  dest=/etc/httpd/conf.d/
+  tags: keystone_config

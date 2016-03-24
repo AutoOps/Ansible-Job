@@ -1,0 +1,8 @@
+---
+# Install and configure dashboard
+- name: restart_dashboard_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - httpd.service
+    - memcached.service
+  tags: dashboard_start

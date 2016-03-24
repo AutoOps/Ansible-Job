@@ -1,0 +1,5 @@
+---
+# Install and configure dashboard 
+- name: Configure the dashboard HTTP server
+  copy: src={{ dashboard_config }}  dest=/etc/openstack-dashboard/
+  tags: dashboard_config

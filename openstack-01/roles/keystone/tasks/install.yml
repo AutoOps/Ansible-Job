@@ -1,0 +1,11 @@
+---
+# Install and configure Keystone
+- name: Install the Keystone package
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-keystone
+    - httpd
+    - mod_wsgi
+    - memcached
+    - python-memcached
+  tags: keystone_install

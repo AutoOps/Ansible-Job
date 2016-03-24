@@ -1,6 +1,6 @@
 ---
 - name: symbolic link /etc/neutron/plugin.ini pointing to the ML2 plug-in
-  shell: ln -sf /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
+  shell: ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
   tags: neutron
   
 - name: neutron_manage_db_sync

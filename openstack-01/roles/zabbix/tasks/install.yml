@@ -1,0 +1,6 @@
+---
+  - name : Install the zabbix agent
+    yum : name={{ item }} state=present
+    with_items:
+      - zabbix-agent
+    tags: zabbix_install
