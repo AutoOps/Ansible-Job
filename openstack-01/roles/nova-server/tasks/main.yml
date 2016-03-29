@@ -1,5 +1,0 @@
----
-
-- include: nova-db.yml
-- include: nova-api.yml
-- include: nova-install.yml

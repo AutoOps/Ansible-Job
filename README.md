@@ -4,24 +4,41 @@ Ansible-Job
 ------------------------
 控制节点：
 主机名：controller
-网卡名：en32
-IPv4: 172.16.50.53/24
-
+网卡名：eno16777984
+IPv4: 172.16.50.66/24
+------------------------
 计算节点：
-主机名：compute1
-网卡名：en32
-IPv4: 172.16.50.54/24
+主机名：
+compute1
+网卡名：eno16777984
+IPv4: 172.16.50.67/24
+
+compute2
+网卡名：eno16777984
+IPv4: 172.16.50.68/24
+
+compute3
+网卡名：eno16777984
+IPv4: 172.16.50.69/24
 ------------------------
 ------------------------
 1.修改主机名
 控制节点:controller
-计算节点:compute1
+计算节点:
+compute1
+compute2
+compute3
 ------------------------
 2.全部节点都做/etc/hosts 硬解析
 # controller
-172.16.50.53	controller
+172.16.50.66	controller
 # compute1
-172.16.50.54	compute1
+172.16.50.67	compute1
+# compute2
+172.16.50.68	compute2
+# compute3
+172.16.50.69	compute3
+
 ------------------------
 3.免密钥登录
   a.从控制节点登录所有计算节点免密钥
@@ -29,116 +46,157 @@ IPv4: 172.16.50.54/24
 ------------------------
 4.密码设置
   为了本次试验，统一设定密码为：
-  MyPassWord*2016
+  aaaaaa
   其中具体可根据自己的需求自行设置
 ------------------------
 5.目录介绍
 
+openstack-01-liberty/
+├── action_plugins
 ├── group_vars
 │   ├── all
 │   ├── compute_servers
-│   ├── controller_servers
-│   └── password
-├── inventory
+│   └── controller_servers
 ├── library
 │   ├── keystone_endpoint.py
 │   └── keystone_service.py
 ├── roles
-│   ├── agent
-│   │   ├── files
-│   │   └── tasks
-│   │       └── main.yml
 │   ├── dashboard
 │   │   ├── files
 │   │   │   └── local_settings
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
-│   │       └── main.yml
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── dhcp_agent
+│   │   └── tasks
+│   │       ├── config.yml
+│   │       ├── main.yml
+│   │       └── start.yml
 │   ├── glance
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
-│   │       ├── glance-api.yml
-│   │       ├── glance-db.yml
-│   │       ├── glance-install.yml
-│   │       └── main.yml
+│   │       ├── api.yml
+│   │       ├── config.yml
+│   │       ├── db.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
 │   ├── keystone
 │   │   ├── files
 │   │   │   └── wsgi-keystone.conf
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
-│   │       ├── httpd.yml
-│   │       ├── keystone-api.yml
-│   │       ├── keystone-db.yml
-│   │       ├── keystone-install.yml
-│   │       └── main.yml
+│   │       ├── api.yml
+│   │       ├── config.yml
+│   │       ├── db.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── l3_agent
+│   │   └── tasks
+│   │       ├── config.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── linuxbridge_agent
+│   │   └── tasks
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
 │   ├── mariadb
 │   │   └── tasks
-│   │       └── main.yml
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── metadata_agent
+│   │   └── tasks
+│   │       ├── config.yml
+│   │       ├── main.yml
+│   │       └── start.yml
 │   ├── mongodb
 │   │   └── tasks
-│   │       └── main
-│   ├── neutron-compute
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── neutron_compute
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
-│   │       ├── bridge-agent.yml
+│   │       ├── config.yml
+│   │       ├── install.yml
 │   │       ├── main.yml
-│   │       ├── neutron-install.yml
-│   │       ├── neutron-nova.yml
-│   │       └── service-enable.yml
-│   ├── neutron-server
+│   │       └── start.yml
+│   ├── neutron_server
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
-│   │       ├── bridge-agent.yml
-│   │       ├── dhcp-agent.yml
-│   │       ├── l3-agent.yml
+│   │       ├── api.yml
+│   │       ├── config.yml
+│   │       ├── db.yml
+│   │       ├── install.yml
 │   │       ├── main.yml
-│   │       ├── metadata-agent.yml
-│   │       ├── ml2.yml
-│   │       ├── neutron-db.yml
-│   │       ├── neutron-install.yml
-│   │       ├── neutron-nova.yml
-│   │       └── service-enable.yml
-│   ├── nova-compute
+│   │       └── start.yml
+│   ├── nova_compute
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
+│   │       ├── config.yml
+│   │       ├── install.yml
 │   │       ├── main.yml
-│   │       ├── nova-com.yml
-│   │       └── ntp-com.yml
-│   ├── nova-server
+│   │       └── start.yml
+│   ├── nova_server
 │   │   ├── handlers
 │   │   │   └── main.yml
 │   │   └── tasks
+│   │       ├── api.yml
+│   │       ├── config.yml
+│   │       ├── db.yml
+│   │       ├── install.yml
 │   │       ├── main.yml
-│   │       ├── nova-api.yml
-│   │       ├── nova-db.yml
-│   │       └── nova-install.yml
+│   │       └── start.yml
 │   ├── ntp
 │   │   ├── files
 │   │   │   └── chrony.conf
-│   │   ├── handlers
-│   │   │   └── main.yml
 │   │   └── tasks
 │   │       ├── change_ntp_cfg_n.yml
 │   │       ├── change_ntp_cfg.yml
-│   │       ├── install_ntp.yml
-│   │       └── main.yml
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main.yml
+│   │       └── start.yml
 │   ├── rabbitmq
 │   │   └── tasks
-│   │       ├── main-bak.yml
+│   │       ├── config.yml
+│   │       ├── install.yml
+│   │       ├── main_old_bak.yml
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── restart_nova_service
+│   │   └── tasks
+│   │       ├── main.yml
+│   │       └── start.yml
+│   ├── system
+│   │   ├── files
+│   │   │   └── local_repo
+│   │   └── tasks
+│   │       ├── init-config.yml
+│   │       ├── init-service.yml
 │   │       └── main.yml
-│   └── system
+│   └── zabbix
 │       ├── files
-│       │   └── local_repo
 │       └── tasks
-│           ├── init-config.yml
-│           ├── init-service.yml
-│           └── main.yml
+│           ├── config.yml
+│           ├── install.yml
+│           ├── main.yml
+│           └── start.yml
 └── site.yml
 ------------------------
 ------------------------

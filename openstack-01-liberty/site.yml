@@ -1,0 +1,29 @@
+---
+  - hosts: all
+    roles:
+      - system
+      - zabbix
+      - ntp
+
+  - hosts: controller_servers
+    roles:
+      - mariadb
+      - mongodb
+      - rabbitmq
+      - keystone
+      - glance
+      - nova_server
+      - neutron_server
+      - dashboard
+#      - linuxbridge_agent
+
+  - hosts: compute_servers
+    roles:
+      - nova_compute
+      - neutron_compute
+#      - agent
+      - linuxbridge_agent
+      - l3_agent
+      - dhcp_agent
+      - metadata_agent
+      - restart_nova_service

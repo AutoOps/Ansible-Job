@@ -1,5 +1,0 @@
----
-# Handlers for common notifications
-
-- name: restart_chronyd
-  service: name=chronyd state=restarted
