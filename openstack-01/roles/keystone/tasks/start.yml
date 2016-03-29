@@ -3,7 +3,7 @@
   service: name={{ item }}  state=restarted  enabled=yes
   with_items:
     - memcached.service
-    - openstack-keystone.service
+#    - openstack-keystone.service
   tags: keystone_start
 
 - name: restart_keystone_httpd_enable

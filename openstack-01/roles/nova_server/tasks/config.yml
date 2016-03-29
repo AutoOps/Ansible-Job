@@ -33,5 +33,5 @@
   tags: nova_server_config
 
 - name: nova_manage_db_sync
-  shell: su -s /bin/sh -c "nova-manage db sync" nova
+  shell: su -s /bin/sh -c "nova-manage db sync" nova || /bin/true
   tags: nova_server_config

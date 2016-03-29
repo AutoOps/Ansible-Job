@@ -8,7 +8,9 @@
   tags: nova_server_db
 
 - name: Grant proper access to the openstack database
-  mysql_user: login_user=root login_password='' name={{ item.name }} password={{ nova_dbpass }} host='%' priv=*.*:ALL state=present
+  mysql_user: login_user=root login_password='' name={{ item.name }} password={{ nova_dbpass }} host={{ item.host }} priv=*.*:ALL state=present
   with_items:
-    - { name: 'nova'}
+    - { name: 'nova',host: '{{ controller }}'}
+    - { name: 'nova',host: 'localhost'}
+    - { name: 'nova',host: '%'}
   tags: nova_server_db

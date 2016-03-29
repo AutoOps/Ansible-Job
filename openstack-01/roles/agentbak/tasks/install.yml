@@ -1,7 +1,7 @@
 ---
-# Install and configure neutron
-- name: Install the Nova package
-  yum: name={{ item }} state=present
+# Install and configure agents
+- name: Install agent packages
+  yum: name={{ item }}
   with_items:
     - openstack-neutron
     - openstack-neutron-ml2
@@ -9,4 +9,4 @@
     - python-neutronclient
     - ebtables
     - ipset
-  tags: neutron_compute_install
+  tags: agent_install

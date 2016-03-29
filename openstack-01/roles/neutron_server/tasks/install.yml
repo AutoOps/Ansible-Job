@@ -4,6 +4,7 @@
   yum: name={{ item }} state=present
   with_items:
     - openstack-neutron
+    - openstack-neutron-ml2
     - python-neutronclient
     - ebtables
     - ipset

@@ -57,7 +57,7 @@
   with_items:
     - { section: 'linux_bridge',option: 'physical_interface_mappings ',value: 'public:{{ public_interface_name }}' }
     - { section: 'vxlan',option: 'enable_vxlan',value: 'True'}
-    - { section: 'vxlan',option: 'local_ip',value: "{{ hostvars[inventory_hostname]['ansible_' + manager_network_interface]['ipv4']['address'] }}"}
+    - { section: 'vxlan',option: 'local_ip',value: '{{ compute }}'}
     - { section: 'vxlan',option: 'l2_population ',value: 'True'}
     - { section: 'agent',option: 'prevent_arp_spoofing',value: 'True'}
     - { section: 'securitygroup',option: 'enable_security_group ',value: 'True'}
@@ -128,5 +128,5 @@
   tags: agent_config
 
 - name: symbolic link /etc/neutron/plugin.ini pointing to the ML2 plug-in
-  shell: ln -sf /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
+  shell: ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
   tags: agent_config

@@ -8,7 +8,9 @@
   tags: keystone_db
 
 - name: Grant proper access to the openstack database
-  mysql_user: login_user=root login_password=''  name={{ item.name }} password={{ keystone_dbpass }} host='%' priv=*.*:ALL state=present
+  mysql_user: login_user=root login_password=''  name={{ item.name }} password={{ keystone_dbpass }} host={{ item.host }} priv=*.*:ALL state=present
   with_items:
-    - { name: 'keystone'}
+    - { name: 'keystone',host: '{{ controller }}'}
+    - { name: 'keystone',host: 'localhost'}
+    - { name: 'keystone',host: '%'}
   tags: keystone_db

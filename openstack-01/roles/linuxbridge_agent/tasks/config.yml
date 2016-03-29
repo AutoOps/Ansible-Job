@@ -1,0 +1,15 @@
+---
+
+# Config /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+- name: Edit the /etc/neutron/plugins/ml2/linuxbridge_agent.ini file and complete the following actions
+  ini_file: >
+     dest=/etc/neutron/plugins/ml2/linuxbridge_agent.ini  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+    - { section: 'linux_bridge',option: 'physical_interface_mappings ',value: 'public:{{ public_interface_name }}' }
+    - { section: 'vxlan',option: 'enable_vxlan',value: 'True'}
+    - { section: 'vxlan',option: 'local_ip',value: "{{ hostvars[inventory_hostname]['ansible_' + manager_network_interface]['ipv4']['address'] }}"}
+    - { section: 'vxlan',option: 'l2_population ',value: 'True'}
+    - { section: 'agent',option: 'prevent_arp_spoofing',value: 'True'}
+    - { section: 'securitygroup',option: 'enable_security_group ',value: 'True'}
+    - { section: 'securitygroup',option: 'firewall_driver',value: 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver'}
+  tags: linuxbridge_agent_config

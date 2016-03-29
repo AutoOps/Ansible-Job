@@ -41,5 +41,5 @@
   tags: glance_config
 
 - name: glance_manage_db_sync
-  shell: su -s /bin/sh -c "glance-manage db_sync" glance
+  shell: su -s /bin/sh -c "glance-manage db_sync" glance || /bin/true
   tags: glance_config

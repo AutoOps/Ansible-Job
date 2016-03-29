@@ -1,0 +1,17 @@
+---
+
+# Config /etc/neutron/dhcp_agent.ini
+- name: Edit the /etc/neutron/dhcp_agent.ini file and complete the following actions
+  ini_file: >
+       dest=/etc/neutron/dhcp_agent.ini  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+        - { section: 'DEFAULT',option: 'interface_driver',value: 'neutron.agent.linux.interface.BridgeInterfaceDriver' }
+        - { section: 'DEFAULT',option: 'dhcp_driver',value: 'neutron.agent.linux.dhcp.Dnsmasq'}
+        - { section: 'DEFAULT',option: 'enable_isolated_metadata',value: 'True'}
+        - { section: 'DEFAULT',option: 'verbose',value: 'True'}
+        - { section: 'DEFAULT',option: 'dnsmasq_config_file',value: '/etc/neutron/dnsmasq-neutron.conf'}
+  tags: dhcp_agent_config
+
+- name: Create file /etc/neutron/dnsmasq-neutron.conf
+  shell: echo "dhcp-option-force=26,1450" >/etc/neutron/dnsmasq-neutron.conf
+  tags: dhcp_agent_config

@@ -1,0 +1,17 @@
+---
+- name: restart_openstack_nova_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - neutron-linuxbridge-agent.service
+    - neutron-dhcp-agent.service
+    - neutron-metadata-agent.service
+    - neutron-l3-agent.service
+    - openstack-nova-compute.service
+  tags: 
+
+#- name: restart_openstack_nova_service_and_Boot_enable
+#  service: name={{ item }}  state=restarted enabled=yes
+#  with_items:
+#    - openstack-nova-compute.service
+#  when: 
+#  tags: agent_start

@@ -16,14 +16,14 @@
     - { section: 'oslo_messaging_rabbit',option: 'rabbit_userid',value: '{{ rabbit_user }}'}
     - { section: 'oslo_messaging_rabbit',option: 'rabbit_password',value: '{{ rabbit_pass }}'}
     - { section: 'DEFAULT',option: 'auth_strategy ',value: 'keystone'}
-    - { section: 'DEFAULT',option: 'my_ip ',value: '{{ compute }}'}
+    - { section: 'DEFAULT',option: 'my_ip ',value: "{{ hostvars[inventory_hostname]['ansible_' + manager_network_interface]['ipv4']['address'] }}"}
     - { section: 'DEFAULT',option: 'rpc_backend',value: 'rabbit'}
     - { section: 'DEFAULT',option: 'network_api_class ',value: 'nova.network.neutronv2.api.API'}
     - { section: 'DEFAULT',option: 'security_group_api ',value: 'neutron'}
     - { section: 'DEFAULT',option: 'linuxnet_interface_driver ',value: 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver'}
     - { section: 'DEFAULT',option: 'firewall_driver ',value: 'nova.virt.firewall.NoopFirewallDriver'}
     - { section: 'vnc',option: 'vncserver_listen ',value: '0.0.0.0'}
-    - { section: 'vnc',option: 'vncserver_proxyclient_address ',value: '{{ controller }}'}
+    - { section: 'vnc',option: 'vncserver_proxyclient_address ',value: "{{ hostvars[inventory_hostname]['ansible_' + manager_network_interface]['ipv4']['address'] }}"}
     - { section: 'vnc',option: 'enabled',value: 'True'}
     - { section: 'vnc',option: 'novncproxy_base_url',value: 'http://{{ controller }}:6080/vnc_auto.html'}
     - { section: 'glance',option: 'host ',value: '{{ controller }}'}

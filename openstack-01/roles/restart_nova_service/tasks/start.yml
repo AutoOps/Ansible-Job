@@ -1,0 +1,14 @@
+---
+- name: restart_openstack_nova_compute
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - openstack-nova-compute.service
+  when: restart_nova_compute | bool
+  tags: restart_openstack_nova_service
+
+- name: restart_openstack_nova_api
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - openstack-nova-api.service
+  when: restart_nova_api | bool
+  tags: restart_openstack_nova_service

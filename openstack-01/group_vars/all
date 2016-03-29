@@ -6,14 +6,14 @@ repo_host: "172.16.90.254"
 public_repo: false # true or false
 
 
-manager_network_interface: "eth0"
-publick_network_interface: "eth0"
-storage_network_interface: "eth0"
+manager_network_interface: "eno16777984"
+publick_network_interface: "eno16777984"
+storage_network_interface: "eno16777984"
 
-host: 172.16.90.100
+#host: 172.16.90.100
 mysql_host: localhost
-neutron_l2_ip: 172.16.90.100
-public_interface_name: eth0
+#neutron_l2_ip: 172.16.90.100
+public_interface_name: eno16777984
 openstack_sql_pass: password
 
 httpd_config: /root/file/wsgi-keystone.conf

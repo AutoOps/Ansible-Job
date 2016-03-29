@@ -16,7 +16,7 @@
   tags: keystone_config
 
 - name: keystone_manage_db_sync
-  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
+  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone || /bin/true
   tags: keystone_config
 
 ##############################

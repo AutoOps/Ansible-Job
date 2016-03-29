@@ -1,0 +1,6 @@
+---
+- name: restart_openstack_nova_service_and_Boot_enable
+  service: name={{ item }}  state=restarted enabled=yes
+  with_items:
+    - neutron-metadata-agent.service
+  tags: metadata_agent

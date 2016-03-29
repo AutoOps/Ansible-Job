@@ -1,5 +1,5 @@
 ---
-# Install and configure neutron
+# Install and configure  neutron
 - name: Edit the /etc/neutron/neutron.conf  file and complete the following actions
   ini_file: >
        dest=/etc/neutron/neutron.conf  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
@@ -37,6 +37,24 @@
     - { section: 'DEFAULT',option: 'debug',value: 'True'}
   tags: neutron_server_config
 
+# Config /etc/neutron/plugins/ml2/ml2_conf.ini
+- name: Edit the /etc/neutron/plugins/ml2/ml2_conf.ini file and complete the following actions
+  ini_file: >
+    dest=/etc/neutron/plugins/ml2/ml2_conf.ini  section={{ item.section }}  option={{ item.option }} value={{ item.value }} 
+  with_items:
+    - { section: 'ml2',option: 'type_drivers  ',value: 'flat,vlan,vxlan' }
+    - { section: 'ml2',option: 'tenant_network_types ',value: 'vxlan'}
+    - { section: 'ml2',option: 'mechanism_drivers ',value: 'linuxbridge,l2population'}
+    - { section: 'ml2',option: 'extension_drivers ',value: 'port_security'}
+    - { section: 'ml2_type_flat',option: 'flat_networks  ',value: '*'}
+    - { section: 'ml2_type_vxlan',option: 'vni_ranges  ',value: '1:1000'}
+    - { section: 'securitygroup',option: 'enable_ipset  ',value: 'True'}
+  tags: neutron_server_config
+
+- name: symbolic link /etc/neutron/plugin.ini pointing to the ML2 plug-in
+  shell: ln -sf /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
+  tags: neutron_server_config
+
 # Config /etc/nova/nova.conf
 - name: Edit the /etc/nova/nova.conf file and complete the following actions
   ini_file: >
@@ -53,11 +71,6 @@
     - { section: 'neutron',option: 'password ',value: '{{ neutron_pass }}'}
     - { section: 'neutron',option: 'service_metadata_proxy  ',value: 'True'}
     - { section: 'neutron',option: 'metadata_proxy_shared_secret ',value: '{{ metadata_secret }}'}
-  tags: neutron_server_config
-
-
-- name: symbolic link /etc/neutron/plugin.ini pointing to the ML2 plug-in
-  shell: ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
   tags: neutron_server_config
   
 - name: neutron_manage_db_sync
