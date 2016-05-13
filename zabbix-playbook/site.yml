@@ -1,0 +1,23 @@
+---
+  - hosts: all
+    roles:
+      - init_system
+
+  - hosts: zabbix_servers
+    roles:
+      - zabbix_server_en
+      - tokudb
+      - init_system
+      - zabbix_server_install
+
+  - hosts: zabbix_proxy
+    roles:
+      - zabbix_proxy_en
+      - tokudb
+      - init_system
+      - zabbix_proxy_install
+
+  - hosts: zabbix_agent
+    roles:
+      - zabbix_agent_en
+      - zabbix_agent_install

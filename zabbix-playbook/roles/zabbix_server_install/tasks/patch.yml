@@ -1,0 +1,16 @@
+---
+  - name: copy_gnutls
+    copy: src=gnutls-3.1.18-8.el7.x86_64.rpm dest=/tmp/
+    tags: copy_gnutls
+
+  - name: patch
+    yum: name={{ item }}
+    with_items:
+      - /tmp/gnutls-3.1.18-8.el7.x86_64.rpm
+    tags: patch
+
+  - name: update_trousers
+    yum: name={{ item }} state=latest
+    with_items:
+      - trousers
+    tags: update_trousers

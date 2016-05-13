@@ -1,0 +1,18 @@
+---
+  - name: install tokudb repo
+    yum: name={{ item }} state=present
+    with_items:
+      - http://www.percona.com/downloads/percona-release/percona-release-0.0-1.x86_64.rpm
+    tags: tokudb_repo
+
+
+  - name: install Percona-Server-tokudb-56.x86_64
+    yum: name={{ item }} state=present
+    with_items:
+      - Percona-Server-tokudb-56.x86_64
+    tags: tokudb_service
+
+
+  - name: start_mysql
+    service: name=mysqld.service state=started enabled=yes
+    tags: start_mysql

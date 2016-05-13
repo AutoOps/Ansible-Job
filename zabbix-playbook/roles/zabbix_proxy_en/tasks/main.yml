@@ -1,0 +1,2 @@
+---
+  - include: zabbix_proxy_package.yml

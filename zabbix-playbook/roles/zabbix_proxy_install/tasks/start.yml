@@ -1,0 +1,8 @@
+---
+  - name: start_service
+    service: name={{ item }} state=started enabled=yes
+    with_items:
+      - mysqld
+      - zabbix-proxy
+      - zabbix-agent
+    tags: start_service

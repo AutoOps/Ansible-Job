@@ -1,0 +1,6 @@
+---
+  - include: install.yml
+  - include: init_database.yml
+  - include: zabbix_proxy_config.yml
+  - include: edit_firewall.yml
+  - include: start.yml

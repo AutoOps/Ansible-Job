@@ -1,0 +1,26 @@
+---
+  - name: zabbix_agent
+    copy: src={{ item.a }} dest={{ item.b }}
+    with_items:
+      - { a: 'zabbix-2.4.6-1.el6.x86_64.rpm',b: '/tmp/' }
+      - { a: 'zabbix-agent-2.4.6-1.el6.x86_64.rpm',b: '/tmp/' }
+    when: 
+      (ansible_distribution == "CentOS" and ansible_distribution_major_version == "6")
+    tags: zabbix_agent
+
+  - name: zabbix_agent_install
+    yum: name={{ item }}
+    with_items:
+      - /tmp/zabbix-2.4.6-1.el6.x86_64.rpm
+      - /tmp/zabbix-agent-2.4.6-1.el6.x86_64.rpm
+    when: 
+      (ansible_distribution == "CentOS" and ansible_distribution_major_version == "6")
+    tags: zabbix_agent_install
+
+  - name: zabbix_agent_repo
+    yum: name={{ item }} state=present
+    with_items:
+      - zabbix-agent
+    when:
+      (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7")
+    tags: install zabbix_agent_repo

@@ -1,0 +1,18 @@
+---
+  - name: change mysql password
+    mysql_user: login_user=root login_password='' name=root password={{ mysqldb_password }} state=present
+    tags: change mysql password
+
+
+  - name: create_database
+    mysql_db: login_user=root login_password={{ mysqldb_password }} name={{ item }} encoding=utf8 state=present
+    with_items:
+      - zabbix
+    tags: create_database
+
+  - name: create_zabbix_user
+    mysql_user: login_user=root login_password={{ mysqldb_password }} name={{ item }} password={{ zabbixdb_password }} host='localhost' priv='zabbix.*:ALL' state=present
+    with_items:
+      - zabbixuser
+    tags: create_zabbix_user
+  

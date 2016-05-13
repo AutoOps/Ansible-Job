@@ -1,0 +1,6 @@
+---
+  - name: start_service
+    service: name={{ item }} state=restarted enabled=yes
+    with_items:
+      - zabbix-agent
+    tags: start_service

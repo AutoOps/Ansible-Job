@@ -1,0 +1,19 @@
+---
+#  - name: mysql_config
+#    shell: free_form={{ item }} 
+#    mysql_db: login_user=root login_password='' name={{ item }} state=present
+#    with_items: 
+#      - /usr/bin/mysql -e "CREATE FUNCTION fnv1a_64 RETURNS INTEGER SONAME 'libfnv1a_udf.so'"
+#      - /usr/bin/mysql -e "CREATE FUNCTION fnv_64 RETURNS INTEGER SONAME 'libfnv_udf.so'"
+#      - /usr/bin/mysql -e "CREATE FUNCTION murmur_hash RETURNS INTEGER SONAME 'libmurmur_udf.so'"
+#    tags:  mysql_config
+
+  - name: running mysql.os script
+    script: mysqlos.sh || /bin/true
+    tags: mysql.os
+
+#  - name: tokudb_plugin
+#    command: free_form={{ item }}
+#    with_items:
+#      - ps_tokudb_admin --enable –uroot
+#    tags: tokudb_plugin

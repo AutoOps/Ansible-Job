@@ -1,0 +1,12 @@
+---
+  - name: edit_firewall
+    firewalld: permanent=true zone=public port={{ item }} state=enabled
+    with_items:
+      - "80/tcp"
+      - "10050/tcp"
+      - "10051/tcp"
+    tags: edit_firewall
+
+  - name: restart_firewall
+    command: systemctl restart firewalld
+    tags: restart_firewall
