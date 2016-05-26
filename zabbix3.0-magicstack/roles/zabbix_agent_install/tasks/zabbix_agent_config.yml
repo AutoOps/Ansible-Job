@@ -1,0 +1,36 @@
+---
+  - name: create_bin_folder
+    file: path=/etc/zabbix/bin state=directory mode=0755 owner=zabbix group=zabbix
+    tags: create_bin_folder
+
+  - name: create_zabbix_agentd_d_folder
+    file: path=/etc/zabbix/zabbix_agentd.d state=directory mode=0755 owner=zabbix group=zabbix
+    tags: create_zabbix_agentd_d_folder
+
+  - name: zabbix_agent_config
+    copy: src={{ item.a }} dest={{ item.b }} group={{ item.c }} owner={{ item.d }} mode={{ item.e }} force=yes
+    with_items:
+      - { a: 'sudoers',b: '/etc/',c: 'root',d: 'root',e: '0644' }
+      - { a: 'bin/diskname.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/hardware.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/nic.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/raid0.disknumber.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/raid1.disknumber.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/systempartition.discovery.py',b: '/etc/zabbix/bin/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'bin/MegaCli/libstorelibir-2.so',b: '/etc/zabbix/bin/MegaCli/',c: 'zabbix',d: 'zabbix',e: '0644' }
+      - { a: 'bin/MegaCli/libstorelibir-2.so.14.07-0',b: '/etc/zabbix/bin/MegaCli/',c: 'zabbix',d: 'zabbix',e: '0644' }
+      - { a: 'bin/MegaCli/MegaCli64',b: '/etc/zabbix/bin/MegaCli/',c: 'zabbix',d: 'zabbix',e: '0755' }
+      - { a: 'zabbix_agentd.d/disk.conf',b: '/etc/zabbix/zabbix_agentd.d/',c: 'zabbix',d: 'zabbix',e: '0755' }
+    tags: zabbix_agent_config
+
+  - name: edit_zabbix-agent_conf
+    template: src=zabbix-agent.j2 dest=/etc/zabbix/zabbix_agentd.conf owner=zabbix group=zabbix mode=0644
+    tags: edit_zabbix_agent_conf
+
+  - name: ipmi_module_registered
+    modprobe: name={{ item }} state=present
+    with_items:
+      - ipmi_watchdog
+      - ipmi_poweroff
+      - ipmi_devintf
+    tags: ipmi_module_registered

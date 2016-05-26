@@ -1,0 +1,6 @@
+---
+  - include: zabbix_agent_package.yml
+  - include: install.yml
+  - include: zabbix_agent_config.yml
+  - include: edit_firewall.yml
+  - include: start.yml

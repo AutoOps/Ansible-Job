@@ -1,0 +1,8 @@
+[zabbix_server]
+172.16.30.146
+
+[zabbix_proxy]
+172.16.30.151
+
+[zabbix_agent]
+172.16.30.152

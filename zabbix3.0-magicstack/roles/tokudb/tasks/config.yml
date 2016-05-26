@@ -1,0 +1,22 @@
+---
+  - name: edit mysql conf
+    ini_file: dest=/etc/my.cnf section={{ item.section }} option={{ item.option }} value={{ item.value }}
+    with_items:
+        - { section: 'mysqld',option: 'max_connections',value: '1000' }
+   # notify: restart_mysqld
+
+  - name: restart mysqld
+    service: name=mysqld.service state=restarted
+
+  - name: mysql_config
+    shell: free_form={{ item }} || /bin/true
+    with_items: 
+      - /usr/bin/mysql -u root -e "CREATE FUNCTION fnv1a_64 RETURNS INTEGER SONAME 'libfnv1a_udf.so'"
+      - /usr/bin/mysql -u root -e "CREATE FUNCTION fnv_64 RETURNS INTEGER SONAME 'libfnv_udf.so'"
+      - /usr/bin/mysql -u root -e "CREATE FUNCTION murmur_hash RETURNS INTEGER SONAME 'libmurmur_udf.so'"
+    tags:  mysql_config
+
+  - name: ps_tokendb_admin
+    command: ps_tokudb_admin --enable –u root 
+    tags: enable tokudb plugin
+

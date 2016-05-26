@@ -1,0 +1,9 @@
+---
+  - name: copy_sql
+    copy: src=autocreate.sql dest=/tmp/
+    tags: copy_sql
+
+  - name: init_database
+    mysql_db: login_user=root login_password="" name=zabbix target=/tmp/autocreate.sql state=import 
+    ignore_errors: True
+    tags: init_database 

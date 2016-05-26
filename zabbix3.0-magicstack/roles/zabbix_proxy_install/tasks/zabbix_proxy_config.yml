@@ -1,0 +1,5 @@
+---
+  - name: zabbix_proxy_conf
+    template: src=zabbix_proxy.j2 dest=/etc/zabbix/zabbix_proxy.conf owner=zabbix group=zabbix  
+    tags: zabbix_proxy_conf  
+

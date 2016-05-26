@@ -1,0 +1,7 @@
+---
+  - name: install zabbix_server repo
+    yum: name={{ item }} state=present
+    with_items:
+      - zabbix-server-mysql
+      - zabbix-web-mysql
+    tags: install zabbix_server repo

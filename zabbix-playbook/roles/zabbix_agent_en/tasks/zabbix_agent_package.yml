@@ -1,7 +1,0 @@
----
-  - name: zabbix_agent_package
-    yum: name={{ item }} state=present
-    with_items:
-      - OpenIPMI
-      - ipmitool
-    tags: zabbix_agent_package

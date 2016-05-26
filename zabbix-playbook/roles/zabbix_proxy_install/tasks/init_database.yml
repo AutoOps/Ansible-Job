@@ -1,8 +1,0 @@
----
-  - name: copy_sql
-    copy: src=autocreate.sql dest=/tmp/
-    tags: copy_sql
-
-  - name: init_database
-    mysql_db: login_user=root login_password={{ mysqldb_password }} name=zabbix target=/tmp/autocreate.sql state=import
-    tags: init_database 

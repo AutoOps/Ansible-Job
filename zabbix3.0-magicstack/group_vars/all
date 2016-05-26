@@ -1,0 +1,5 @@
+zabbix_proxy: 172.16.30.143
+zabbix_server: 172.16.30.144
+zabbixdb_user: zabbixuser
+zabbixdb_password: PHIcloud2015
+

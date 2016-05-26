@@ -1,0 +1,8 @@
+---
+  - name: copy_sql
+    copy: src=schema_proxy.sql dest=/tmp/
+    tags: copy_sql
+
+  - name: init_database
+    mysql_db: login_user=root  name=zabbix target=/tmp/schema_proxy.sql state=import
+    tags: init_database 
