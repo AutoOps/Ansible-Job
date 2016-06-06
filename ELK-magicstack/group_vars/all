@@ -1,0 +1,6 @@
+esip: 172.16.30.51
+kibanaip: 172.16.30.51
+kafkaip: 172.16.30.51
+kafka_data: /tmp/data/
+es_data: /path/data
+es_logs: /path/logs

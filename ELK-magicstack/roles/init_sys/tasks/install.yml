@@ -1,0 +1,5 @@
+---
+        - name: install java
+          yum: name=java state=installed
+        - name: install libselinux-python
+          yum: name=libselinux-python state=installed

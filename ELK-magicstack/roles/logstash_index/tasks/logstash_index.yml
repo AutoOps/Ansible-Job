@@ -1,0 +1,13 @@
+---
+        - name: logstash input index
+          copy: src=conf/ dest=/etc/logstash/conf.d/ owner=logstash group=logstash
+          notify: logstash_index
+          tags: logstash-index-input
+
+        - name: chown logstash root
+          user: name=logstash group=root
+
+        - name: logstash output index
+          template: src=output_1000_es.j2 dest=/etc/logstash/conf.d/output_1000_es.conf owner=logstash group=logstash
+          notify: logstash_output_conf
+          tags: logstash_output_index

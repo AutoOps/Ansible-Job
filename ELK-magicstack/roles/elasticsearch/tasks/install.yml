@@ -1,0 +1,7 @@
+---
+        - name: copy file
+          copy: src=elasticsearch-2.3.3.rpm dest=/tmp
+
+        - name: rpm install es
+          yum: name=/tmp/elasticsearch-2.3.3.rpm
+

@@ -1,0 +1,22 @@
+---
+        - name: logstash input conf
+          copy: src=conf/ dest=/etc/logstash/conf.d/  owner=logstash group=logstash
+          notify: restart_logstash
+          tags: loginput_conf
+        
+        - name: logstash output conf
+          template: src=output_1000_kafka.j2 dest=/etc/logstash/conf.d/output_1000_kafka.conf owner=logstash group=logstash
+          notify: restart_logstash
+          tags: logoutput_conf
+
+        - name: logstash add root group
+          user: name=logstash group=root
+
+        - name: logstash init conf
+          lineinfile: dest=/etc/init.d/logstash regexp={{ item.a }} line={{ item.b }}
+          with_items:
+                - { a: LS_USER=, b: "LS_USER=root" }
+                - { a: LS_GROUP=, b: "LS_GROUP=root" }
+
+        - name: logstash reinit
+          shell: systemctl daemon-reload

@@ -1,0 +1,7 @@
+---
+        - name: start zookeeper 
+          shell: service zookeeper restart
+
+        - name: start kafka     
+          shell: service kafka restart   
+          tags: start_kafka

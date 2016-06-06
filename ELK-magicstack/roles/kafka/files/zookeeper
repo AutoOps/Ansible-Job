@@ -1,0 +1,51 @@
+DAEMON_PATH=/opt/kafka_2.10-0.9.0.1
+DAEMON_NAME=zookeeper
+# Check that networking is up.
+#[ ${NETWORKING} = "no" ] && exit 0
+
+PATH=$PATH:$DAEMON_PATH
+
+# See how we were called.
+case "$1" in
+  start)
+        # Start daemon.
+        pid=`ps -ef|grep zookeeper.properties | grep -v grep | awk '{print $2}'`
+        if [ -n "$pid" ]
+	then
+	  echo "$DAEMON_NAME is Running"
+	else
+          echo "Starting $DAEMON_NAME";
+	  nohup $DAEMON_PATH/bin/zookeeper-server-start.sh $DAEMON_PATH/config/zookeeper.properties &
+	fi
+        ;;
+  stop)
+        # Stop daemons.
+        pid=`ps -ef|grep zookeeper.properties | grep -v grep | awk '{print $2}'`
+        echo "Shutting down $DAEMON_NAME";
+        if [ -n "$pid" ]
+          then
+          kill -9 $pid
+        else
+          echo "$DAEMON_NAME was not Running"
+        fi
+        ;;
+  restart)
+        $0 stop
+        sleep 2
+        $0 start
+        ;;
+  status)
+	pid=`ps -ef|grep zookeeper.properties | grep -v grep | awk '{print $2}'`
+        if [ -n "$pid" ]
+          then
+          echo "$DAEMON_NAME is Running as PID: $pid"
+        else
+          echo "$DAEMON_NAME is not Running"
+        fi
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+esac
+
+exit 0

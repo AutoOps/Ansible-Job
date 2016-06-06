@@ -1,0 +1,16 @@
+---
+        - name: copy kibana
+          copy: src=kibana-4.5.1-1.x86_64.rpm dest=/tmp
+
+        - name: install kibana
+          yum: name=/tmp/kibana-4.5.1-1.x86_64.rpm
+          tags: install_kibana        
+
+        - name: config kibana
+          lineinfile: dest=/opt/kibana/config/kibana.yml regexp={{ item.a }} line={{ item.b }}
+          with_items:
+                - { a: server.port, b: "server.port: 5601" }
+                - { a: server.host, b: "server.host: {{ kibanaip }}" }
+                - { a: elasticsearch.url, b: "elasticsearch.url: http://{{ esip }}:9200/" }
+          tags: config_kibana
+

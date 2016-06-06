@@ -1,0 +1,10 @@
+output {
+
+        stdout { codec => rubydebug }
+        kafka {
+              bootstrap_servers => "{{ kafkaip }}:9092"
+              topic_id => "pcloud"
+              compression_type => "snappy"
+        }
+}
+

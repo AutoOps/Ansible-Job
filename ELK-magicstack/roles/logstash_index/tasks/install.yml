@@ -1,0 +1,11 @@
+---
+        - name: copy file logstash
+          copy: src=logstash-2.2.2-1.noarch.rpm dest=/tmp
+
+        - name: packages install
+          yum: name=ruby state=installed
+
+        - name: install logstash
+          yum: name=/tmp/logstash-2.2.2-1.noarch.rpm  
+          tags: install_logstash
+

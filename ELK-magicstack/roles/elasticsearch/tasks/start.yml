@@ -1,0 +1,4 @@
+---
+        - name: start elasticsearch service
+          service: name=elasticsearch.service state=restarted
+          

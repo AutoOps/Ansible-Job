@@ -1,0 +1,15 @@
+---
+        - hosts: all
+          roles:
+                - init_sys
+
+        - hosts: es_kafka_kibana
+          roles:
+                - kibana
+                - elasticsearch
+                - kafka
+                - logstash_index
+
+        - hosts: logstash
+          roles:
+                - logstash

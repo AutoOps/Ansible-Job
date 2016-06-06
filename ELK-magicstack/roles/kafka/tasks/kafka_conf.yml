@@ -1,0 +1,13 @@
+---
+        - name: kafka conf
+          template: src=server_properties.j2 dest=/opt/kafka_2.10-0.9.0.1/config/server.properties
+          tags: kafka_conf
+        
+        - name: kafka data dir conf
+          lineinfile: dest=/opt/kafka_2.10-0.9.0.1/config/zookeeper.properties regexp={{ item.a }} line={{ item.b }}
+          with_items:
+                - { a: ^dataDir=, b: "dataDir={{ kafka_data }}" }
+          tags: kafka_data
+
+        - name: create kafka_data
+          file: name={{ kafka_data  }}  state=directory

@@ -1,0 +1,15 @@
+---
+        - name: elasticsearch conf
+          lineinfile: dest=/etc/elasticsearch/elasticsearch.yml regexp={{ item.a}} line={{ item.b }}
+          with_items:
+                - { a: ^network.host, b: "network.host: {{ esip }}" }
+                - { a: ^http.port, b: "http.port: 9200" }
+                - { a: ^path.data, b: "path.data: {{ es_data }}" }
+                - { a: ^path.logs, b: "path.logs: {{ es_logs}}" }
+          tags: conf_elasticsearch
+
+        - name: create file {{ es_data }}
+          file: name={{ es_data }} state=directory owner=elasticsearch group=elasticsearch
+
+        - name: create file {{ es_logs}}
+          file: name={{ es_logs }} state=directory owner=elasticsearch group=elasticsearch

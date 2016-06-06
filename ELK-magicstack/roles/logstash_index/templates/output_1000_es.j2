@@ -1,0 +1,9 @@
+output {
+        elasticsearch {
+                hosts => "{{ esip }}:9200"
+                document_type => "%{type}"
+                workers =>2
+                index => "logstash-%{type}-%{+YYYY.MM.dd}"
+        }
+}
+

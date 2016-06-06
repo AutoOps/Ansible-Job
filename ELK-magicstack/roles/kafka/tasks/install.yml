@@ -1,0 +1,14 @@
+---
+        - name: copy kafka
+          copy: src=kafka_2.10-0.9.0.1.tgz dest=/tmp/
+
+        - name: tar install kafka
+          unarchive: src=/tmp/kafka_2.10-0.9.0.1.tgz dest=/opt/  copy=no
+
+        - name: copy service file
+          copy: src={{ item.a }} dest={{ item.b }} mode=0755
+          with_items:
+                - { a: zookeeper,b: /etc/init.d/ }
+                - { a: kafka,b: /etc/init.d/ }
+          tags: copy_init_kafka
+

@@ -1,0 +1,4 @@
+---
+        - name: restart_logstash
+          service: name=logstash.service state=restarted
+          tags: restart_logstash
